@@ -1,0 +1,6 @@
+@DriverLicenseAPI_HostAddress = http://localhost:5117
+
+GET {{DriverLicenseAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

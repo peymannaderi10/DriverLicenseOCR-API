@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/DriverLicenseAPI/index.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Z8OJldXNsLu56OYmQc3z6d4Cz\u002BfFR5kwEWU8GRLQ2rw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3603"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022Z8OJldXNsLu56OYmQc3z6d4Cz\u002BfFR5kwEWU8GRLQ2rw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 15:59:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/DriverLicenseAPI/index.tbvwi5971k.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tbvwi5971k"},{"Name":"integrity","Value":"sha256-Z8OJldXNsLu56OYmQc3z6d4Cz\u002BfFR5kwEWU8GRLQ2rw="},{"Name":"label","Value":"_content/DriverLicenseAPI/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3603"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022Z8OJldXNsLu56OYmQc3z6d4Cz\u002BfFR5kwEWU8GRLQ2rw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 15:59:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>
