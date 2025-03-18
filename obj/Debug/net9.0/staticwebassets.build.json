@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jruAh1WPlnD/l9j+wOTV+65xQDOw7W8x0Sce+c7SBo0=",
+  "Hash": "Sxi7ChPGqjj7J8HIvlH0HQbQJNwds3Oag5k9fy9ilE0=",
   "Source": "DriverLicenseAPI",
   "BasePath": "_content/DriverLicenseAPI",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-tbvwi5971k.gz",
+      "Identity": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-p9i4qsjv22.gz",
       "SourceId": "DriverLicenseAPI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/DriverLicenseAPI",
-      "RelativePath": "index#[.{fingerprint=tbvwi5971k}]?.html.gz",
+      "RelativePath": "index#[.{fingerprint=p9i4qsjv22}]?.html.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -31,8 +31,8 @@
       "RelatedAsset": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\wwwroot\\index.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "bvn8fhl83a",
-      "Integrity": "1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q=",
+      "Fingerprint": "q1wl00qmfx",
+      "Integrity": "frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\wwwroot\\index.html"
@@ -52,8 +52,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "tbvwi5971k",
-      "Integrity": "Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw=",
+      "Fingerprint": "p9i4qsjv22",
+      "Integrity": "fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
@@ -62,12 +62,12 @@
   "Endpoints": [
     {
       "Route": "index.html",
-      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-tbvwi5971k.gz",
+      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-p9i4qsjv22.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000844594595"
+          "Quality": "0.000391849530"
         }
       ],
       "ResponseHeaders": [
@@ -77,15 +77,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1183"
+          "Value": "2551"
         },
         {
           "Name": "ETag",
-          "Value": "\"1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q=\""
+          "Value": "\"frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 15:59:43 GMT"
+          "Value": "Tue, 18 Mar 2025 18:38:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -105,13 +105,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw=\""
+          "Value": "W/\"fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw="
+          "Value": "sha256-fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk="
         }
       ]
     },
@@ -126,7 +126,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3603"
+          "Value": "10516"
         },
         {
           "Name": "Content-Type",
@@ -134,11 +134,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw=\""
+          "Value": "\"fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 15:59:43 GMT"
+          "Value": "Tue, 18 Mar 2025 18:38:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -148,13 +148,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw="
+          "Value": "sha256-fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk="
         }
       ]
     },
     {
       "Route": "index.html.gz",
-      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-tbvwi5971k.gz",
+      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-p9i4qsjv22.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -163,7 +163,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1183"
+          "Value": "2551"
         },
         {
           "Name": "Content-Type",
@@ -171,11 +171,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q=\""
+          "Value": "\"frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 15:59:43 GMT"
+          "Value": "Tue, 18 Mar 2025 18:38:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -193,18 +193,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q="
+          "Value": "sha256-frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg="
         }
       ]
     },
     {
-      "Route": "index.tbvwi5971k.html",
-      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-tbvwi5971k.gz",
+      "Route": "index.p9i4qsjv22.html",
+      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-p9i4qsjv22.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000844594595"
+          "Quality": "0.000391849530"
         }
       ],
       "ResponseHeaders": [
@@ -214,15 +214,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1183"
+          "Value": "2551"
         },
         {
           "Name": "ETag",
-          "Value": "\"1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q=\""
+          "Value": "\"frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 15:59:43 GMT"
+          "Value": "Tue, 18 Mar 2025 18:38:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -242,13 +242,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw=\""
+          "Value": "W/\"fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tbvwi5971k"
+          "Value": "p9i4qsjv22"
         },
         {
           "Name": "label",
@@ -256,12 +256,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw="
+          "Value": "sha256-fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk="
         }
       ]
     },
     {
-      "Route": "index.tbvwi5971k.html",
+      "Route": "index.p9i4qsjv22.html",
       "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\wwwroot\\index.html",
       "Selectors": [],
       "ResponseHeaders": [
@@ -271,7 +271,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3603"
+          "Value": "10516"
         },
         {
           "Name": "Content-Type",
@@ -279,11 +279,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw=\""
+          "Value": "\"fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 15:59:43 GMT"
+          "Value": "Tue, 18 Mar 2025 18:38:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -293,7 +293,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tbvwi5971k"
+          "Value": "p9i4qsjv22"
         },
         {
           "Name": "label",
@@ -301,13 +301,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Z8OJldXNsLu56OYmQc3z6d4Cz+fFR5kwEWU8GRLQ2rw="
+          "Value": "sha256-fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk="
         }
       ]
     },
     {
-      "Route": "index.tbvwi5971k.html.gz",
-      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-tbvwi5971k.gz",
+      "Route": "index.p9i4qsjv22.html.gz",
+      "AssetFile": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\obj\\Debug\\net9.0\\compressed\\vdesxmt8rp-p9i4qsjv22.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -316,7 +316,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1183"
+          "Value": "2551"
         },
         {
           "Name": "Content-Type",
@@ -324,11 +324,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q=\""
+          "Value": "\"frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 15:59:43 GMT"
+          "Value": "Tue, 18 Mar 2025 18:38:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -346,7 +346,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tbvwi5971k"
+          "Value": "p9i4qsjv22"
         },
         {
           "Name": "label",
@@ -354,7 +354,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-1820J966bPcK8VLvZh2PWpP4VGwUEVExGAjydpHeH0Q="
+          "Value": "sha256-frVz6Lj4XiEQcCEKPiGdTtMhnhbvWFzA7FBT8EgH4Wg="
         }
       ]
     }

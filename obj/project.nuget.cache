@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TbYyD7xKcgs=",
+  "dgSpecHash": "Z+ihipbN4dQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\Peyma\\source\\repos\\OCR-API\\DriverLicenseAPI\\DriverLicenseAPI.csproj",
   "expectedPackageFiles": [
@@ -15,7 +15,9 @@
     "C:\\Users\\Peyma\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\7.3.2\\swashbuckle.aspnetcore.swagger.7.3.2.nupkg.sha512",
     "C:\\Users\\Peyma\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\7.3.2\\swashbuckle.aspnetcore.swaggergen.7.3.2.nupkg.sha512",
     "C:\\Users\\Peyma\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\7.3.2\\swashbuckle.aspnetcore.swaggerui.7.3.2.nupkg.sha512",
-    "C:\\Users\\Peyma\\.nuget\\packages\\system.drawing.common\\9.0.3\\system.drawing.common.9.0.3.nupkg.sha512"
+    "C:\\Users\\Peyma\\.nuget\\packages\\system.drawing.common\\9.0.3\\system.drawing.common.9.0.3.nupkg.sha512",
+    "C:\\Users\\Peyma\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\Peyma\\.nuget\\packages\\tesseract\\5.2.0\\tesseract.5.2.0.nupkg.sha512"
   ],
   "logs": []
 }

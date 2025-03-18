@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Server.IIS;
 using System.Text;
 using System.Text.Json;
 using System.Net.Http.Headers;
+using DriverLicenseAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register our OCR service
+builder.Services.AddSingleton<DriverLicenseOcrService>();
 
 // Configure file upload size limit (if needed for larger image files)
 builder.Services.Configure<IISServerOptions>(options =>

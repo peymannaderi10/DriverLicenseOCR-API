@@ -36,15 +36,108 @@
             max-height: 200px;
             margin-top: 10px;
         }
+        .fields-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .options {
+            display: flex;
+            margin: 15px 0;
+            gap: 10px;
+        }
+        .manual-state {
+            display: none;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Driver License Analyzer</h1>
     <p>Upload a driver's license image to analyze it using AI.</p>
     
+    <div class="options">
+        <label>
+            <input type="radio" name="mode" value="auto" checked onclick="toggleManualState()"> 
+            Auto-detect state and extract data
+        </label>
+        <label>
+            <input type="radio" name="mode" value="manual" onclick="toggleManualState()"> 
+            Manually specify state
+        </label>
+    </div>
+    
+    <div class="manual-state" id="manualStateContainer">
+        <label for="stateSelect">Select State:</label>
+        <select id="stateSelect">
+            <option value="">-- Select State --</option>
+            <option value="alabama">Alabama</option>
+            <option value="alaska">Alaska</option>
+            <option value="arizona">Arizona</option>
+            <option value="arkansas">Arkansas</option>
+            <option value="california">California</option>
+            <option value="colorado">Colorado</option>
+            <option value="connecticut">Connecticut</option>
+            <option value="delaware">Delaware</option>
+            <option value="florida">Florida</option>
+            <option value="georgia">Georgia</option>
+            <option value="hawaii">Hawaii</option>
+            <option value="idaho">Idaho</option>
+            <option value="illinois">Illinois</option>
+            <option value="indiana">Indiana</option>
+            <option value="iowa">Iowa</option>
+            <option value="kansas">Kansas</option>
+            <option value="kentucky">Kentucky</option>
+            <option value="louisiana">Louisiana</option>
+            <option value="maine">Maine</option>
+            <option value="maryland">Maryland</option>
+            <option value="massachusetts">Massachusetts</option>
+            <option value="michigan">Michigan</option>
+            <option value="minnesota">Minnesota</option>
+            <option value="mississippi">Mississippi</option>
+            <option value="missouri">Missouri</option>
+            <option value="montana">Montana</option>
+            <option value="nebraska">Nebraska</option>
+            <option value="nevada">Nevada</option>
+            <option value="newhampshire">New Hampshire</option>
+            <option value="newjersey">New Jersey</option>
+            <option value="newmexico">New Mexico</option>
+            <option value="newyork">New York</option>
+            <option value="northcarolina">North Carolina</option>
+            <option value="northdakota">North Dakota</option>
+            <option value="ohio">Ohio</option>
+            <option value="oklahoma">Oklahoma</option>
+            <option value="oregon">Oregon</option>
+            <option value="pennsylvania">Pennsylvania</option>
+            <option value="rhodeisland">Rhode Island</option>
+            <option value="southcarolina">South Carolina</option>
+            <option value="southdakota">South Dakota</option>
+            <option value="tennessee">Tennessee</option>
+            <option value="texas">Texas</option>
+            <option value="utah">Utah</option>
+            <option value="vermont">Vermont</option>
+            <option value="virginia">Virginia</option>
+            <option value="washington">Washington</option>
+            <option value="westvirginia">West Virginia</option>
+            <option value="wisconsin">Wisconsin</option>
+            <option value="wyoming">Wyoming</option>
+        </select>
+    </div>
+    
     <div class="upload-container">
         <input type="file" id="licenseImage" accept="image/*">
-        <button onclick="uploadImage()">Analyze License</button>
+        <button onclick="analyzeImage()">Analyze License</button>
         <div class="loading" id="loading">Analyzing... This may take a moment...</div>
         <img id="preview" src="" alt="Preview" style="display: none;">
     </div>
@@ -52,9 +145,35 @@
     <h2>Analysis Result</h2>
     <div id="result">Results will appear here after analysis.</div>
     
+    <div class="fields-container">
+        <h2>Extracted Fields</h2>
+        <table id="fieldsTable">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Fields will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    
     <script>
         const fileInput = document.getElementById('licenseImage');
         const preview = document.getElementById('preview');
+        
+        function toggleManualState() {
+            const manualContainer = document.getElementById('manualStateContainer');
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            
+            if (mode === 'manual') {
+                manualContainer.style.display = 'block';
+            } else {
+                manualContainer.style.display = 'none';
+            }
+        }
         
         fileInput.addEventListener('change', function() {
             const file = fileInput.files[0];
@@ -68,10 +187,11 @@
             }
         });
         
-        async function uploadImage() {
+        async function analyzeImage() {
             const fileInput = document.getElementById('licenseImage');
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
+            const fieldsTable = document.getElementById('fieldsTable').getElementsByTagName('tbody')[0];
             
             if (!fileInput.files.length) {
                 alert('Please select an image file first.');
@@ -85,11 +205,29 @@
             try {
                 loading.style.display = 'block';
                 result.textContent = 'Analyzing...';
+                fieldsTable.innerHTML = '';
                 
-                const response = await fetch('/api/DriverLicense/analyze', {
-                    method: 'POST',
-                    body: formData
-                });
+                const mode = document.querySelector('input[name="mode"]:checked').value;
+                let response;
+                
+                if (mode === 'manual') {
+                    const state = document.getElementById('stateSelect').value;
+                    if (!state) {
+                        alert('Please select a state.');
+                        loading.style.display = 'none';
+                        return;
+                    }
+                    
+                    response = await fetch(`/api/DriverLicense/analyzeWithState?state=${encodeURIComponent(state)}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                } else {
+                    response = await fetch('/api/DriverLicense/analyze', {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
                 
                 if (!response.ok) {
                     throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
@@ -97,6 +235,29 @@
                 
                 const data = await response.json();
                 result.textContent = data.analysis;
+                
+                // Display detected state
+                if (data.state) {
+                    result.textContent += `\n\nDetected State: ${data.state}`;
+                }
+                
+                // Display extracted fields in the table
+                if (data.fields && Object.keys(data.fields).length > 0) {
+                    for (const [field, value] of Object.entries(data.fields)) {
+                        const row = fieldsTable.insertRow();
+                        const fieldCell = row.insertCell(0);
+                        const valueCell = row.insertCell(1);
+                        
+                        fieldCell.textContent = field;
+                        valueCell.textContent = value;
+                    }
+                } else {
+                    const row = fieldsTable.insertRow();
+                    const cell = row.insertCell(0);
+                    cell.colSpan = 2;
+                    cell.textContent = 'No fields extracted';
+                    cell.style.textAlign = 'center';
+                }
             } catch (error) {
                 result.textContent = `Error: ${error.message}`;
                 console.error('Error analyzing image:', error);

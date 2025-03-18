@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using DriverLicenseAPI.Services;
 
 namespace DriverLicenseAPI.Controllers;
 
@@ -14,13 +15,16 @@ public class DriverLicenseController : ControllerBase
     private readonly HttpClient _httpClient;
     private readonly string _ollamaEndpoint = "http://localhost:11434";
     private readonly string _modelName = "llava:7b-v1.6-mistral-q2_K"; 
+    private readonly DriverLicenseOcrService _ocrService;
 
-    public DriverLicenseController(ILogger<DriverLicenseController> logger, IHttpClientFactory httpClientFactory)
+    public DriverLicenseController(
+        ILogger<DriverLicenseController> logger, 
+        IHttpClientFactory httpClientFactory,
+        DriverLicenseOcrService ocrService)
     {
         _logger = logger;
-        
-        // Get a custom HttpClient with a long timeout
         _httpClient = httpClientFactory.CreateClient("OllamaClient");
+        _ocrService = ocrService;
     }
 
     [HttpPost("analyze")]
@@ -31,28 +35,113 @@ public class DriverLicenseController : ControllerBase
 
         try
         {
-            // Convert the image to base64
+            // Convert the image to base64 and raw bytes
             string base64Image;
+            byte[] imageBytes;
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
-                base64Image = Convert.ToBase64String(memoryStream.ToArray());
+                imageBytes = memoryStream.ToArray();
+                base64Image = Convert.ToBase64String(imageBytes);
             }
 
-            // Create a direct request to Ollama API
+            // Step 1: Detect the state with Ollama
+            var state = await DetectStateAsync(base64Image);
+            
+            if (string.IsNullOrEmpty(state) || state.Equals("unknown", StringComparison.OrdinalIgnoreCase))
+            {
+                return Ok(new { 
+                    analysis = "Could not identify the state for this driver's license.",
+                    state = "Unknown",
+                    fields = new Dictionary<string, string>()
+                });
+            }
+
+            // Step 2: Use the state to find the appropriate template and perform OCR
+            var licenseData = await _ocrService.ExtractLicenseDataAsync(state, imageBytes);
+
+            if (licenseData == null)
+            {
+                return Ok(new { 
+                    analysis = $"Detected state: {state}, but could not extract field data.",
+                    state,
+                    fields = new Dictionary<string, string>()
+                });
+            }
+
+            return Ok(new { 
+                analysis = $"Successfully processed {state} driver's license.",
+                state = licenseData.State,
+                fields = licenseData.Fields
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error analyzing driver's license image");
+            return StatusCode(500, $"Error analyzing image: {ex.Message}");
+        }
+    }
+
+    [HttpPost("analyzeWithState")]
+    public async Task<IActionResult> AnalyzeDriverLicenseWithState(IFormFile file, [FromQuery] string state)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Please upload a valid image file.");
+
+        if (string.IsNullOrEmpty(state))
+            return BadRequest("Please specify a state name.");
+
+        try
+        {
+            // Convert the image to bytes
+            byte[] imageBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                imageBytes = memoryStream.ToArray();
+            }
+
+            // Normalize state name for consistency
+            state = state.Trim();
+            
+            _logger.LogInformation("Processing license for state: {state}", state);
+            
+            // Use the specified state to find the template and perform OCR
+            var licenseData = await _ocrService.ExtractLicenseDataAsync(state, imageBytes);
+
+            if (licenseData == null)
+            {
+                return Ok(new { 
+                    analysis = $"Could not process {state} driver's license. Template may not exist.",
+                    state,
+                    fields = new Dictionary<string, string>()
+                });
+            }
+
+            return Ok(new { 
+                analysis = $"Successfully processed {state} driver's license.",
+                state = licenseData.State,
+                fields = licenseData.Fields
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error analyzing driver's license with state {state}", state);
+            return StatusCode(500, $"Error analyzing image: {ex.Message}");
+        }
+    }
+
+    private async Task<string> DetectStateAsync(string base64Image)
+    {
+        try
+        {
+            // Create a direct request to Ollama API for state detection
             var requestBody = new
             {
                 model = _modelName,
-                prompt = "CONCISE TASK: Identify ONLY the US state name (usually says at the top left) from this driver's license. Response format: just the state name and the expiration date.",
+                prompt = "IMPORTANT INSTRUCTIONS: You are analyzing a driver's license image. Your response must be ONLY the state name (e.g., 'California', 'New York'). If you cannot identify a specific state, just respond with 'Unknown'. Do not explain your reasoning or provide any other information.",
                 images = new[] { base64Image },
-                stream = false, // Don't stream to simplify processing
-                options = new
-                {
-                    temperature = 0.0,   // Zero temperature for deterministic output
-                    num_predict = 10,    // Limit token generation
-                    top_p = 0.1,         // Restrict to only the most likely tokens
-                    top_k = 1,            // Consider only the most likely token
-                }
+                stream = false // Don't stream to simplify processing
             };
 
             var content = new StringContent(
@@ -69,10 +158,10 @@ public class DriverLicenseController : ControllerBase
             var ollamaResponse = JsonSerializer.Deserialize<OllamaResponse>(responseBody);
             
             // Extract and post-process the response
-            string analysis = ollamaResponse?.Response?.Trim() ?? "Unknown";
+            string state = ollamaResponse?.Response?.Trim() ?? "Unknown";
             
             // Extract just the state name if explanation is still provided
-            if (analysis.Length > 20)
+            if (state.Length > 20)
             {
                 // Look for state names in the response
                 var stateNames = new[] { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
@@ -83,28 +172,28 @@ public class DriverLicenseController : ControllerBase
                     "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", 
                     "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" };
                 
-                foreach (var state in stateNames)
+                foreach (var name in stateNames)
                 {
-                    if (analysis.Contains(state, StringComparison.OrdinalIgnoreCase))
+                    if (state.Contains(name, StringComparison.OrdinalIgnoreCase))
                     {
-                        analysis = state;
+                        state = name;
                         break;
                     }
                 }
                 
                 // If we still have a long response and no state found, return "Unknown"
-                if (analysis.Length > 20)
+                if (state.Length > 20)
                 {
-                    analysis = "Unknown";
+                    state = "Unknown";
                 }
             }
 
-            return Ok(new { analysis });
+            return state;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error analyzing driver's license image");
-            return StatusCode(500, $"Error analyzing image: {ex.Message}");
+            _logger.LogError(ex, "Error detecting state");
+            return "Unknown";
         }
     }
     

@@ -66,6 +66,10 @@
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "tesseract": {
+              "target": "Package",
+              "version": "[5.2.0, )"
             }
           },
           "imports": [
