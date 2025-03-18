@@ -23,6 +23,7 @@ A .NET Core API that analyzes driver's licenses using AI to detect the state and
 ```
 ollama pull llava:7b-v1.6-mistral-q2_K
 ```
+NOTE: model can be changed based on your hardware.
 
 ### 2. Install .NET 9 SDK
 
