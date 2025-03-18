@@ -21,7 +21,7 @@ A .NET Core API that analyzes driver's licenses using AI to detect the state and
 3. Pull the LLaVA vision model by running the following in your terminal:
 
 ```
-ollama pull llava:7b
+ollama pull llava:7b-v1.6-mistral-q2_K
 ```
 
 ### 2. Install .NET 9 SDK
