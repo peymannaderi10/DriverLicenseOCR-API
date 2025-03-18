@@ -16,6 +16,7 @@ public class DriverLicenseController : ControllerBase
     private readonly string _ollamaEndpoint = "http://localhost:11434";
     private readonly string _modelName = "llava:7b-v1.6-mistral-q2_K"; 
     private readonly DriverLicenseOcrService _ocrService;
+    private readonly bool _isWindowsPlatform;
 
     public DriverLicenseController(
         ILogger<DriverLicenseController> logger, 
@@ -25,6 +26,7 @@ public class DriverLicenseController : ControllerBase
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("OllamaClient");
         _ocrService = ocrService;
+        _isWindowsPlatform = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows);
     }
 
     [HttpPost("analyze")]
@@ -53,26 +55,40 @@ public class DriverLicenseController : ControllerBase
                 return Ok(new { 
                     analysis = "Could not identify the state for this driver's license.",
                     state = "Unknown",
-                    fields = new Dictionary<string, string>()
+                    fields = new Dictionary<string, string>(),
+                    processedImage = string.Empty
                 });
             }
 
             // Step 2: Use the state to find the appropriate template and perform OCR
-            var licenseData = await _ocrService.ExtractLicenseDataAsync(state, imageBytes);
+            if (!_isWindowsPlatform)
+            {
+                return Ok(new {
+                    analysis = $"Detected state: {state}. OCR processing is only available on Windows platforms.",
+                    state,
+                    fields = new Dictionary<string, string>(),
+                    processedImage = string.Empty
+                });
+            }
+
+            var result = await _ocrService.ExtractLicenseDataAsync(state, imageBytes);
+            var (licenseData, processedImageBase64) = result;
 
             if (licenseData == null)
             {
                 return Ok(new { 
                     analysis = $"Detected state: {state}, but could not extract field data.",
                     state,
-                    fields = new Dictionary<string, string>()
+                    fields = new Dictionary<string, string>(),
+                    processedImage = string.Empty
                 });
             }
 
             return Ok(new { 
                 analysis = $"Successfully processed {state} driver's license.",
                 state = licenseData.State,
-                fields = licenseData.Fields
+                fields = licenseData.Fields,
+                processedImage = processedImageBase64
             });
         }
         catch (Exception ex)
@@ -106,22 +122,36 @@ public class DriverLicenseController : ControllerBase
             
             _logger.LogInformation("Processing license for state: {state}", state);
             
+            // Check if running on Windows
+            if (!_isWindowsPlatform)
+            {
+                return Ok(new {
+                    analysis = $"OCR processing is only available on Windows platforms.",
+                    state,
+                    fields = new Dictionary<string, string>(),
+                    processedImage = string.Empty
+                });
+            }
+            
             // Use the specified state to find the template and perform OCR
-            var licenseData = await _ocrService.ExtractLicenseDataAsync(state, imageBytes);
+            var result = await _ocrService.ExtractLicenseDataAsync(state, imageBytes);
+            var (licenseData, processedImageBase64) = result;
 
             if (licenseData == null)
             {
                 return Ok(new { 
                     analysis = $"Could not process {state} driver's license. Template may not exist.",
                     state,
-                    fields = new Dictionary<string, string>()
+                    fields = new Dictionary<string, string>(),
+                    processedImage = string.Empty
                 });
             }
 
             return Ok(new { 
                 analysis = $"Successfully processed {state} driver's license.",
                 state = licenseData.State,
-                fields = licenseData.Fields
+                fields = licenseData.Fields,
+                processedImage = processedImageBase64
             });
         }
         catch (Exception ex)

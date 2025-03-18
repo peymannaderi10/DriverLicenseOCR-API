@@ -1,16 +1,16 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/DriverLicenseAPI/index.f59b7g6s88.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"f59b7g6s88"},{"Name":"integrity","Value":"sha256-Ewp33yOLKIRjs7Hzmd27VHtulwGVvj6xqeq8atJJoLQ="},{"Name":"label","Value":"_content/DriverLicenseAPI/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"11515"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022Ewp33yOLKIRjs7Hzmd27VHtulwGVvj6xqeq8atJJoLQ=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 19:39:41 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/DriverLicenseAPI/index.html">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"10516"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 18:38:33 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/DriverLicenseAPI/index.p9i4qsjv22.html">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"p9i4qsjv22"},{"Name":"integrity","Value":"sha256-fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk="},{"Name":"label","Value":"_content/DriverLicenseAPI/index.html"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"10516"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022fW9JDW0Wj2gYEJuiDIVfhXQlzTaayKBKap2tXrVW6gk=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 18:38:33 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Ewp33yOLKIRjs7Hzmd27VHtulwGVvj6xqeq8atJJoLQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"11515"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022Ewp33yOLKIRjs7Hzmd27VHtulwGVvj6xqeq8atJJoLQ=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 19:39:41 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

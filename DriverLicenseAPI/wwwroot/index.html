@@ -160,6 +160,12 @@
         </table>
     </div>
     
+    <div class="processed-image-container" style="margin-top: 20px; display: none;" id="processedImageContainer">
+        <h2>Processed Image</h2>
+        <p>This is how the image was processed for OCR (grayscale with enhanced contrast):</p>
+        <img id="processedImage" style="max-width: 100%; border: 1px solid #ddd;" alt="Processed Image">
+    </div>
+    
     <script>
         const fileInput = document.getElementById('licenseImage');
         const preview = document.getElementById('preview');
@@ -239,6 +245,17 @@
                 // Display detected state
                 if (data.state) {
                     result.textContent += `\n\nDetected State: ${data.state}`;
+                }
+                
+                // Display processed image if available
+                const processedImageContainer = document.getElementById('processedImageContainer');
+                const processedImage = document.getElementById('processedImage');
+                
+                if (data.processedImage && data.processedImage.length > 0) {
+                    processedImage.src = `data:image/jpeg;base64,${data.processedImage}`;
+                    processedImageContainer.style.display = 'block';
+                } else {
+                    processedImageContainer.style.display = 'none';
                 }
                 
                 // Display extracted fields in the table
