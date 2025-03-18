@@ -43,7 +43,7 @@ Invoke-WebRequest -Uri "https://github.com/tesseract-ocr/tessdata/raw/main/eng.t
 
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/OCR-API.git
+git clone https://github.com/peymannaderi10/OCR-API.git
 cd OCR-API
 ```
 
