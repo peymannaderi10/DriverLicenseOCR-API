@@ -129,6 +129,11 @@ The system uses XML templates for each state that define the positions of fields
   <!-- More fields -->
 </annotation>
 ```
+## Labeling More License Images:
+I use Label Studio to label the fields I want to extract from on a license variant and will use the generate XML to guide tesseract
+into extracting the fields and labelling them correctly without picking up noise.
+
+https://github.com/HumanSignal/labelImg
 
 ## Troubleshooting
 
