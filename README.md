@@ -21,8 +21,9 @@ A .NET Core API that analyzes driver's licenses using AI to detect the state and
 3. Pull the LLaVA vision model by running the following in your terminal:
 
 ```
-ollama pull llava:7b
+ollama pull llava:7b-v1.6-mistral-q2_K
 ```
+NOTE: model can be changed based on your hardware.
 
 ### 2. Install .NET 9 SDK
 
@@ -43,7 +44,7 @@ Invoke-WebRequest -Uri "https://github.com/tesseract-ocr/tessdata/raw/main/eng.t
 
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/OCR-API.git
+git clone https://github.com/peymannaderi10/OCR-API.git
 cd OCR-API
 ```
 
@@ -129,6 +130,11 @@ The system uses XML templates for each state that define the positions of fields
   <!-- More fields -->
 </annotation>
 ```
+## Labeling More License Images:
+I use Label Studio to label the fields I want to extract from on a license variant and will use the generate XML to guide tesseract
+into extracting the fields and labelling them correctly without picking up noise.
+
+https://github.com/HumanSignal/labelImg
 
 ## Troubleshooting
 
