@@ -12,27 +12,15 @@
 	</size>
 	<segmented>0</segmented>
 	<object>
-		<name>Full Name</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>305</xmin>
-			<ymin>189</ymin>
-			<xmax>606</xmax>
-			<ymax>248</ymax>
-		</bndbox>
-	</object>
-	<object>
 		<name>Date of Birth</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>306</xmin>
-			<ymin>155</ymin>
-			<xmax>551</xmax>
-			<ymax>186</ymax>
+			<xmin>379</xmin>
+			<ymin>152</ymin>
+			<xmax>558</xmax>
+			<ymax>185</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -41,9 +29,9 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>306</xmin>
-			<ymin>119</ymin>
-			<xmax>621</xmax>
+			<xmin>407</xmin>
+			<ymin>115</ymin>
+			<xmax>626</xmax>
 			<ymax>153</ymax>
 		</bndbox>
 	</object>
@@ -53,10 +41,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>632</xmin>
-			<ymin>161</ymin>
-			<xmax>825</xmax>
-			<ymax>184</ymax>
+			<xmin>696</xmin>
+			<ymin>159</ymin>
+			<xmax>839</xmax>
+			<ymax>185</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -65,10 +53,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>303</xmin>
-			<ymin>253</ymin>
-			<xmax>578</xmax>
-			<ymax>312</ymax>
+			<xmin>324</xmin>
+			<ymin>246</ymin>
+			<xmax>857</xmax>
+			<ymax>316</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -77,10 +65,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>308</xmin>
-			<ymin>367</ymin>
-			<xmax>405</xmax>
-			<ymax>391</ymax>
+			<xmin>331</xmin>
+			<ymin>363</ymin>
+			<xmax>418</xmax>
+			<ymax>392</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -89,10 +77,34 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>32</xmin>
+			<xmin>12</xmin>
 			<ymin>424</ymin>
-			<xmax>294</xmax>
-			<ymax>497</ymax>
+			<xmax>302</xmax>
+			<ymax>508</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Last Name</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>322</xmin>
+			<ymin>189</ymin>
+			<xmax>852</xmax>
+			<ymax>219</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>First Name</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>319</xmin>
+			<ymin>218</ymin>
+			<xmax>853</xmax>
+			<ymax>249</ymax>
 		</bndbox>
 	</object>
 </annotation>

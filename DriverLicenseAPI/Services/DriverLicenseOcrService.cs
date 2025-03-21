@@ -6,6 +6,9 @@ using System.Runtime.Versioning;
 using System.Xml.Serialization;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace DriverLicenseAPI.Services;
 
@@ -126,6 +129,23 @@ public class DriverLicenseOcrService
                         using var page = engine.Process(pix);
                         
                         var text = page.GetText().Trim();
+                        
+                        // Special processing for the Sex field - extract only F or M
+                        if (field.Name.Equals("Sex", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Find the first F or M in the text
+                            var match = text.ToUpper().FirstOrDefault(c => c == 'F' || c == 'M');
+                            if (match != '\0')
+                            {
+                                text = match.ToString();
+                            }
+                        }
+                        // Special processing for Address fields
+                        else if (field.Name.Contains("Address", StringComparison.OrdinalIgnoreCase))
+                        {
+                            text = FormatAddress(text);
+                        }
+                        
                         licenseData.Fields[field.Name] = text;
                         
                         _logger.LogInformation("Field {fieldName}: {text}", field.Name, text);
@@ -263,6 +283,140 @@ public class DriverLicenseOcrService
         {
             _logger.LogError(ex, "Error loading template for state: {state}", state);
             return null;
+        }
+    }
+
+    // Method to format address string into proper format
+    private string FormatAddress(string rawAddress)
+    {
+        try
+        {
+            rawAddress = rawAddress.Trim();
+            if (string.IsNullOrEmpty(rawAddress))
+                return rawAddress;
+
+            // Remove periods but keep hyphens for ZIP+4
+            rawAddress = rawAddress.Replace(".", "").Replace(",", "");
+            
+            // Look for ZIP code pattern (5 digits with optional -4 digits at the end)
+            var zipMatch = System.Text.RegularExpressions.Regex.Match(rawAddress, @"(\d{5}(?:-\d{4})?)$");
+            string zip = string.Empty;
+            
+            if (zipMatch.Success)
+            {
+                zip = zipMatch.Groups[1].Value;
+                // Remove ZIP from raw address for further processing
+                rawAddress = rawAddress.Substring(0, rawAddress.Length - zip.Length);
+            }
+            
+            // Look for state code (typically 2 uppercase letters before ZIP)
+            string state = string.Empty;
+            if (rawAddress.Length >= 2)
+            {
+                state = rawAddress.Substring(rawAddress.Length - 2);
+                if (state.Length == 2 && state.All(char.IsLetter))
+                {
+                    // Remove state from raw address
+                    rawAddress = rawAddress.Substring(0, rawAddress.Length - 2);
+                }
+                else
+                {
+                    state = string.Empty; // Reset if not valid
+                }
+            }
+            
+            // Look for apartment number (like APT2 or APT 2)
+            string aptNumber = string.Empty;
+            var aptMatch = System.Text.RegularExpressions.Regex.Match(rawAddress, @"APT\s*(\d+)|#\s*(\d+)|\b[A-Z]*\s*UNIT\s*(\d+)", RegexOptions.IgnoreCase);
+            
+            if (aptMatch.Success)
+            {
+                // Find which group captured the number
+                string number = aptMatch.Groups[1].Value;
+                if (string.IsNullOrEmpty(number)) number = aptMatch.Groups[2].Value;
+                if (string.IsNullOrEmpty(number)) number = aptMatch.Groups[3].Value;
+                
+                aptNumber = number;
+                
+                // Remove apartment info from address
+                int index = aptMatch.Index;
+                int length = aptMatch.Length;
+                
+                if (index + length <= rawAddress.Length)
+                {
+                    rawAddress = rawAddress.Remove(index, length);
+                }
+            }
+            
+            // Now split the beginning for house number and street
+            var numberMatch = System.Text.RegularExpressions.Regex.Match(rawAddress.Trim(), @"^(\d+)");
+            string houseNumber = string.Empty;
+            string street = rawAddress.Trim();
+            
+            if (numberMatch.Success)
+            {
+                houseNumber = numberMatch.Groups[1].Value;
+                street = rawAddress.Substring(houseNumber.Length).Trim();
+                
+                // Handle special case where street number might contain the ordinal number
+                // Example: "257024THSTREET" should be "2570 24TH STREET"
+                if (houseNumber.Length > 4 && 
+                    (street.StartsWith("TH", StringComparison.OrdinalIgnoreCase) || 
+                     street.StartsWith("ND", StringComparison.OrdinalIgnoreCase) || 
+                     street.StartsWith("RD", StringComparison.OrdinalIgnoreCase) ||
+                     street.StartsWith("ST", StringComparison.OrdinalIgnoreCase)))
+                {
+                    // Extract the base address number (first 4 digits or fewer)
+                    string baseNumber = houseNumber.Substring(0, Math.Min(4, houseNumber.Length));
+                    
+                    // Extract the ordinal number (remaining digits)
+                    string ordinalNumber = houseNumber.Substring(Math.Min(4, houseNumber.Length));
+                    
+                    // Update house number and street
+                    houseNumber = baseNumber;
+                    street = ordinalNumber + street;
+                    
+                    // Add a space after the ordinal indicator
+                    if (street.StartsWith("TH", StringComparison.OrdinalIgnoreCase))
+                        street = street.Insert(2, " ");
+                    else if (street.StartsWith("ND", StringComparison.OrdinalIgnoreCase))
+                        street = street.Insert(2, " ");
+                    else if (street.StartsWith("RD", StringComparison.OrdinalIgnoreCase))
+                        street = street.Insert(2, " ");
+                    else if (street.StartsWith("ST", StringComparison.OrdinalIgnoreCase))
+                        street = street.Insert(2, " ");
+                    
+                    _logger.LogInformation("Corrected address format: {baseNumber} {ordinalStreet}", 
+                        baseNumber, street);
+                }
+            }
+            
+            // Format the result - use spaces between components
+            var formattedParts = new List<string>();
+            
+            if (!string.IsNullOrEmpty(houseNumber))
+                formattedParts.Add(houseNumber);
+                
+            if (!string.IsNullOrEmpty(street))
+                formattedParts.Add(street.Trim());
+                
+            if (!string.IsNullOrEmpty(aptNumber))
+                formattedParts.Add("APT " + aptNumber);
+                
+            // If we couldn't parse a city, it might be part of the street still
+            
+            if (!string.IsNullOrEmpty(state))
+                formattedParts.Add(state);
+                
+            if (!string.IsNullOrEmpty(zip))
+                formattedParts.Add(zip);
+                
+            return string.Join(" ", formattedParts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning("Error formatting address: {error}. Returning raw text.", ex.Message);
+            return rawAddress;
         }
     }
 } 
